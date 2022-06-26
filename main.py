@@ -95,8 +95,8 @@ class pieces:
                 if i != self:
                     # collide with other pieces
                     if (self.x - i.x) ** 2 + (self.y - i.y) ** 2 == (self.tp.sz + i.tp.sz) ** 2:
-                        i.spdx += self.spdx
-                        i.spdy += self.spdy
+                        i.spdx += self.spdx/i.tp.weight
+                        i.spdy += self.spdy/i.tp.weight
                         self.spdx = 0
                         self.spdy = 0
                     elif (self.x - i.x) ** 2 + (self.y - i.y) ** 2 < (self.tp.sz + i.tp.sz) ** 2:
@@ -104,9 +104,21 @@ class pieces:
                         i.spdy += self.spdy
                         self.spdx = 0
                         self.spdy = 0
+                        if abs(i.spdx) < 1:
+                            if i.spdx < 0:
+                                i.spdx = -1
+                            elif i.spdx > 0:
+                                i.spdx = 1
+                        if abs(i.spdy) < 1:
+                            if i.spdy < 0:
+                                i.spdy = -1
+                            elif i.spdy > 0:
+                                i.spdy = 1
                         while (self.x - i.x) ** 2 + (self.y - i.y) ** 2 < (self.tp.sz + i.tp.sz) ** 2:
-                            i.x += i.spdx+0.5
-                            i.y += i.spdy+0.5
+                            i.x += i.spdx
+                            i.y += i.spdy
+                        i.spdx /= i.tp.weight
+                        i.spdy /= i.tp.weight
             return True
         if stage != 1:
             self.spdy, self.spdx = 0, 0
@@ -169,7 +181,7 @@ while running:
     ntime = time.time()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            exit(0)
     sc.fill((0, 0, 0))
 
     pygame.draw.rect(sc, (255, 255, 255), (-vx, -vy, gmsz[0], gmsz[1]))

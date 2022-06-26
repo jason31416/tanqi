@@ -5,5 +5,5 @@ all_pieces:
     speed: 15
   - name: "obstacle"
     size: 50
-    weight: 100000
+    weight: 100000000
     speed: 1
