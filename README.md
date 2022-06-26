@@ -16,6 +16,12 @@ cd tanqi
 python3 main.py
 ```
 
+### after installing, when you wan't to open it again, use
+```
+cd tanqi
+python3 main.py
+```
+
 if it doesn't work, then run `xcode-select --install` first and then run the previous code again.
 
 ### backup plan:
