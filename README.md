@@ -7,13 +7,15 @@ a simple game
 3. go to the folder "tanqi" (use `cd`)
 4. enter `python3 main.py`
 
-or just do step 1 and run this code:
+or just do step 1 and go to terminal and run this code:
 ```
 pip3 install pygame
 git clone https://github.com/jason31416/tanqi.git
 cd tanqi
 python3 main.py
 ```
+
+if it doesn't work, then run `xcode-select --install` first and then run the previous code again.
 
 ### backup plan:
 download [pycharm](https://www.jetbrains.com/pycharm/download/#section=mac)
