@@ -7,3 +7,7 @@ all_pieces:
     size: 50
     weight: 100000000
     speed: 1
+  - name: "custom" # any name you like
+    size: 10 # the size of the pieces
+    weight: 1.03 # the weight of the pieces(will determine the decrease of the speed, CANNOT BE LOWER THAN 1!!! usually between 1.01 and 1.3)
+    speed: 15 # the max speed a player can move the pieces
