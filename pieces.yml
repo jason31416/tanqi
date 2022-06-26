@@ -1,0 +1,9 @@
+all_pieces:
+  - name: "normal"
+    size: 10
+    weight: 1.03
+    speed: 15
+  - name: "obstacle"
+    size: 50
+    weight: 100000
+    speed: 1

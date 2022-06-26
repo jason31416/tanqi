@@ -1,0 +1,14 @@
+display:
+  width: 1512
+  height: 982
+game:
+  width: 1000
+  height: 1000
+  setup:
+    type: normal
+    seed: 0
+    num: 5
+    obstacle_num: 3
+    team_num: 2
+    default_type: normal
+    obstacle_type: obstacle
