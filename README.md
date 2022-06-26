@@ -1,7 +1,7 @@
 # tanqi
 a simple game
 
-how to install:
+## how to install(for noob):
 1. download python 3.10: [python.org](https://www.python.org/downloads/)
 2. go to terminal and enter `pip3 install pygame` to install pygame
 3. go to the folder "tanqi" (use `cd`)
@@ -14,3 +14,6 @@ git clone https://github.com/jason31416/tanqi.git
 cd tanqi
 python3 main.py
 ```
+
+### backup plan:
+download [pycharm](https://www.jetbrains.com/pycharm/download/#section=mac)
