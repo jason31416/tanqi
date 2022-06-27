@@ -5,10 +5,11 @@ game:
   width: 1000 # the game simulation size(map size)
   height: 1000
   setup:
-    type: normal # the type of the setup(normal, random, custom(not supported yet, if choosen all below would be ignored))
+    type: normal # the type of the setup(normal, random, custom(if chosen all below would be ignored))
     seed: 0 # the seed of the random setup(ADVANCED USER ONLY)
     num: 5 # the number of pieces
     obstacle_num: 3 # the number of obstacles
     team_num: 2 # the number of teams
     default_type: normal # the default type of the pieces (from pieces.yml)
     obstacle_type: obstacle # the type of the obstacles (from pieces.yml)
+    custom_plugin: "totally_random_generator" # only work if type is custom

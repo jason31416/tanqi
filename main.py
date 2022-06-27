@@ -2,6 +2,8 @@ import pygame
 import yaml
 import time
 import random
+import os
+import basicplugin
 
 cf = open("config.yml")
 
@@ -17,6 +19,20 @@ pygame.init()
 
 cf.close()
 
+print("loading all plugins...")
+
+all_plgs = {}
+
+for i in os.listdir("plugins"):
+    if i.endswith(".py"):
+        print("loading plugin: " + i)
+        fl = open("plugins/" + i)
+        exec(fl.read())
+        all_plgs[i[:-3]] = eval(i[:-3]+"()")
+        fl.close()
+
+print("done!")
+
 class ptpc:
     def __init__(self, sz, weight, spd):
         self.sz = sz
@@ -25,17 +41,29 @@ class ptpc:
 
 ptype = {}
 
+gmsz = (config["game"]["width"], config["game"]["height"])
+
 for i in piecest["all_pieces"]:
     ptype[i["name"]] = ptpc(i["size"], i["weight"], i["speed"])
 
 sc = pygame.display.set_mode((config["display"]["width"], config["display"]["height"]))
 
+ets = []
+
 if config["game"]["setup"]["type"] != "custom":
     tmsc = {"red": (255, 0, 0), "blue": (0, 0, 255), "green": (0, 255, 0), "yellow": (255, 255, 0), "other": (0, 0, 0)}
     human_tms = ["red", "blue", "green", "yellow"][:config["game"]["setup"]["team_num"]]
     tms_p_left = {"red": 0, "blue": 0, "green": 0, "yellow": 0}
+else:
+    plgrt: basicplugin.entitylist = all_plgs[config["game"]["setup"]["custom_plugin"]].custom_generator()
+    tmsc = plgrt.tmsc
+    gmsz = plgrt.gmsz
+    human_tms = plgrt.player_teams
+    tms_p_left = {}
+    for i in human_tms:
+        tms_p_left[i] = 0
+    ets = plgrt.pieceslist
 
-gmsz = (config["game"]["width"], config["game"]["height"])
 wsz = (config["display"]["width"], config["display"]["height"])
 
 def dist(x1, y1, x2, y2):
@@ -168,6 +196,9 @@ def setup():
                 create_pieces(100, random.randint(100, gmsz[0]-100), config["game"]["setup"]["default_type"], "yellow")
         for i in range(config["game"]["setup"]["obstacle_num"]):
             create_pieces(random.randint(200, gmsz[0]-200), random.randint(200, gmsz[1]-200), config["game"]["setup"]["obstacle_type"], "other")
+    elif config["game"]["setup"]["type"] == "custom":
+        for i in ets:
+            create_pieces(i[0], i[1], i[3], i[2])
 
 setup()
 
@@ -241,6 +272,9 @@ while running:
 
     draw_text("Now its " + human_tms[turn] + "'s turn", 24, 10, 10, tmsc[human_tms[turn]])
 
+    for i in all_plgs.keys():
+        all_plgs[i].update()
+
     while time.time() - ntime < 1 / fps:
         pass
     pygame.display.update()
@@ -248,7 +282,7 @@ while running:
 
 
 sc.fill((255, 255, 255))
-draw_text("Winner is " + winner, 96, gmsz[0]/2-128, gmsz[1]/2-48, tmsc[winner])
+draw_text("Team" + winner + "wins!", 96, gmsz[0]/2-128, gmsz[1]/2-48, tmsc[winner])
 pygame.display.update()
 runninga = True
 while runninga:
